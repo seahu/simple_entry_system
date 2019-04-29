@@ -1,0 +1,41 @@
+<?php
+namespace App\Presenters;
+
+use Nette,
+	 Nette\Application\UI,
+    Nette\Application\UI\Form;
+use Nette\Application\BadRequestException;
+use Nette\Application\ForbiddenRequestException;
+use Tracy\Debugger;
+
+/*
+// ---- ukazka jmen funkci a jejich automaticke pouziti ----
+NazevPresenter.php
+	renderShowNazev2()
+	
+showNazev2.latte
+	<a n:href="Nazev:ShowNazev2">← csv</a> //odkaz na funkci renderShowNazev2() v presenteru NazevPresenter.php
+*/
+
+class GroupPresenter extends BasePresenter
+{
+    /** @var Nette\Database\Context */
+    private $database;
+
+    public function __construct(Nette\Database\Context $database)
+    {
+        $this->database = $database;
+    }
+
+	public function renderDefault()
+	{
+		$this->template->anyVariable = 'any value';
+      $this->template->posts = $this->database->table('posts')
+        ->order('created_at DESC')
+        ->limit(5);
+	}
+
+}
+
+
+

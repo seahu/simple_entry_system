@@ -1,0 +1,10 @@
+{block content}
+
+<p><a n:href="Homepage:default">← back to Home</a></p>
+
+<table>
+ <tr n:foreach="$cards as $card">
+	<td><a href="{link Post:show $card->id}">{$card->card_code}</a></td>
+	<td>{$card->name}</td>
+	<td>{$card->status}</td>
+</table>

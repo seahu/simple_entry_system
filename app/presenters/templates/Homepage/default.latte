@@ -1,0 +1,70 @@
+{* This is the welcome page, you can delete it *}
+{block content}
+<h1>
+	<a href="/seahu"><img src="{$basePath}/images/logo_v2.svg" id="img_logo" width="80px"></a> 
+	Jenoduchý vstupní systém pro školy 
+	<a href="http://www.spsstavrbno.cz"><img src="{$basePath}/images/spss-logo.svg" id="img_logo" width="100px"></a>
+	{if $relay2}
+		<a href="{link Homepage:control 'status' => $relay2}"> <img src="{$basePath}/images/fire.png" width="30px"> </a>
+	{else}
+		<a href="{link Homepage:control 'status' => $relay2}"> <img src="{$basePath}/images/fire-no.png" width="30px"></a>
+	{/if}
+</h1>
+<table>
+	<tr>
+		<td><h2><a href="{link Cards:showList}">Karty</a></h2></td>
+		<td><h2><a href="{link Group:showList}">Skupiny</a></h2></td>
+		<td><h2><a href="{link History:showHistory}">Historie</a></h2></td>
+		<td><h2><a href="{link Edookit:}">Edookit</a></h2></td>
+		<td><h2><a href="{link CardReaders:showList}">Čtečky karet</a></h2></td>
+		<td><h2><a href="{link Config:}">Konfigurace</a></h2></td>
+		<td><h2><a href="{link Action:showEnter}">Akce</a></h2></td>
+	</tr>
+	<tr>
+		<td>
+			Počet karet: {$number_all}<br>
+			<a href="{link Cards:showListPritomni}">Přítomných: {$number_in} </a>
+		</td>
+		<td>Počet skupin: {$number_groups}</td>
+		<td>Počet záznamů: {$number_logs}</td>
+		<td>Počet záznamů k synchronizaci: {$number_logs_need_sync}</td>
+		<td>Počet čteček: {$number_card_readers}</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td width="50%" valign="top">
+			<h2>Příchody</h2>
+			<table>
+				<tr>
+					<th>Čas</th>
+					<th>Jméno</th>
+				</tr>
+					<tr n:foreach="$entry as $row" n:class="$iterator->isOdd() ? odd : even" >
+						<td>{$row->timestamp}</td>
+						<td>{$row->card->name}</td>
+					</tr>
+			</table>
+		</td>
+		<td valign="top">
+			<h2>Odchody</h2>
+			<table>
+				<tr>
+					<th>Čas</th>
+					<th>Jméno</th>
+				</tr>
+					<tr n:foreach="$exits as $row" n:class="$iterator->isOdd() ? odd : even" >
+						<td>{$row->timestamp}</td>
+						<td>{$row->card->name}</td>
+					</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<div>
+	<a href="{$basePath}/adminer/">tool Adminer</a>
+</div>
+

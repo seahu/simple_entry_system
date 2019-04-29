@@ -1,0 +1,8 @@
+<h1>Edookit synchronizace zaku</h1>
+
+Skola: {$SkolaNazev} <br>
+Skolni rok: {$SkolniRok}<br>
+Pololeti: {$Pololeti} <br>
+Pocet trid: {$pocetTrid} <br>
+Pocet novych zaznamu: {$new} <br>
+Pocet editovanych zaznamu: {$edit} <br>

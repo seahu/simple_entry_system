@@ -1,0 +1,38 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+<div id="dialog" title="Confirmation Required">
+  Opravdu opravdu toto chcete kartu a jeji zaznamy smazat?
+</div>
+<h1>Seznam karet</h1>
+<p><a n:href="Homepage:default">← back to Home</a></p>
+<p><a n:href="Cards:showNewCard"> Nova karta</a></p>
+{control cardSearchForm}
+<table>
+	<tr align="left">
+	<th> kód karty </th>
+	<th> Jméno </th>
+	<th> Přístup </th>
+	<th> Status </th>
+	<th> Vložit příchod </th>
+	<th> Vložit odchod </th>
+	<th> Smazat </th>
+	</tr>
+	<tr n:foreach="$cards as $card" n:class="$iterator->isOdd() ? odd : even" >
+		<td><a href="{link Cards:showCard $card->id}">{$card->card_code}</a></td>
+		<td>{$card->name}</td>
+		<td>{$card->access|replace:"1":"povoleno"|replace:"0":"zakazano"}</td>
+		<td>{$card->status|replace:"1":"přítomen"|replace:"0":"nepřítomen"}</td>
+		<!--<td><a class="confirmLink" href="{link Cards:showConfirmationDeleteCard $card->id}">smazat</a></td>-->
+		<td><a href="{link Cards:InsertCardEntry $card->id}">vložit příchod</a></td>
+		<td><a href="{link Cards:InsertCardExit $card->id}">vložit odchod</a></td>
+		<td><a class="confirmLink" href="{link Cards:deleteCard $card->id}">smazat</a></td>
+	</tr>
+</table>
+<p><a n:href="Cards:ShowCsvList">← csv</a></p>
+{dump}

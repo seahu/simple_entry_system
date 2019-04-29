@@ -1,0 +1,38 @@
+/*** Layout ***/
+.lichaHodina{
+	position: absolute;
+	height: 30px;
+	width: 60px;
+	background-color: #C3C3C3;
+}
+
+.sudaHodina{
+	position: absolute;
+	height: 30px;
+	width: 60px;
+	background-color: #AEADAD;
+	
+}
+
+
+.pritomen {
+	position: absolute;
+	top: 2px;
+	height: 26px;
+	background-color: #297DEE;
+}
+
+.prichod {
+	position: absolute;
+	height: 30px;
+	width: 4px;
+	background-color: #00D412;
+}
+
+.odchod {
+	position: absolute;
+	height: 30px;
+	width: 4px;
+	border: 3px solid #73AD21;
+	background-color: #F0074E;
+}

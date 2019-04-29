@@ -1,0 +1,1 @@
+[2018-10-31 21-31-13] ReflectionException: Method App\Presenters\HistoryPresenter::viewhHistory() does not exist in /var/www/access/vendor/nette/utils/src/Utils/Callback.php:162  @  http://10.10.102.226/access/history/show-history  @@  exception--2018-10-31--21-31--b94ed49b48.html

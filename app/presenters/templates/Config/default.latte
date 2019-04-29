@@ -1,0 +1,25 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+<div id="dialog" title="Confirmation Required">
+  Opravdu opravdu chcete smazat veškerou historií a záznamýveskerou historii a zaznamy vsech karet a skupin?
+</div>
+
+<p><a n:href="Homepage:default">← Zpět domu</a></p>
+<h1>Konfigurace vstupního systému</h1>
+<table>
+	<tr>
+	 <td>
+		{control configForm}
+	</td>
+	</tr>
+</table>
+<div align="center">
+	<a class="confirmLink" href="{link Config:clearAll}"> Promazani tabulek </a>
+</div>
+

@@ -1,0 +1,5 @@
+{block content}
+
+Oprtadu chtete smazat kartu {$card->card_code} {$card->name}:
+
+{control deletCardForm}

@@ -1,0 +1,34 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+<div id="dialog" title="Confirmation Required">
+  Opravdu opravdu toto chcete kartu a jeji zaznamy smazat?
+</div>
+
+<p><a n:href="Homepage:default">← back to Home</a></p>
+<h1>Seznam čteček karet</h1>
+<p><a n:href="CardReaders:showNewCardReader"> Nová čtečka karet</a></p>
+<table>
+	<tr align="left">
+	<th> ID </th>
+	<th> Adresa </th>
+	<th> Komentář </th>
+	<th> Směr přístupu</th>
+	</tr>
+	
+	<tr n:foreach="$cardReaders as $cardReader" n:class="$iterator->isOdd() ? odd : even" >
+		<td>{$cardReader->id}</td>
+		<td><a href="{link CardReaders:showCardReader $cardReader->id}">{$cardReader->address}</a></td>
+		<td>{$cardReader->comment}</td>
+		<td>{$cardReader->direction|replace:"1":"dovnitř"|replace:"0":"ven"}</td>
+		<td><a class="confirmLink" href="{link CardReaders:deleteCardReader $cardReader->id}">smazat</a></td>
+	</tr>
+</table>
+<hr>
+PS: Seznam čteček karet se nastavuje při zprovozňování systému, poté již není potřeba zde nic měnit. 
+{dump}

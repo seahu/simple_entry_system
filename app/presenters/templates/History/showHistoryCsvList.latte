@@ -1,0 +1,3 @@
+{foreach $history as $row}
+	{$row->timestamp},{$row->card->card_code},{$row->card->name},{$row->card_reader->comment},{$row->card_reader->direction|replace:"1":"dovnitř"|replace:"0":"ven"} <br>
+{/foreach}

@@ -1,0 +1,9 @@
+<h1>Edookit synchronizace průchodů</h1>
+<p><a n:href="Homepage:default">← Zpět domu</a> <a n:href="Edookit:">← Zpět na seznam skupin</a></p>
+
+Počet odeslaných záznamu: {$entries} <br>
+Počet chybně odeslaných záznamů: {$err}
+{$xml}
+<br>
+url: {url}<br>
+{$context}

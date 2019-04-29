@@ -1,0 +1,3 @@
+{foreach $cards as $card}
+	{$card->card_code},{$card->name},{$card->access|replace:"1":"povoleno"|replace:"0":"zakazano"},{$card->status|replace:"1":"přítomen"|replace:"0":"nepřítomen"} <br>
+{/foreach}

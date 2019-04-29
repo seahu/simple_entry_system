@@ -1,0 +1,188 @@
+<?php
+namespace App\Presenters;
+
+use Nette,
+	 Nette\Application\UI,
+    Nette\Application\UI\Form;
+use Nette\Application\BadRequestException;
+use Nette\Application\ForbiddenRequestException;
+
+/*
+// ---- ukazka jmen funkci a jejich automaticke pouziti ----
+NazevPresenter.php
+	renderShowNazev2()
+	
+showNazev2.latte
+	<a n:href="Nazev:ShowNazev2">← csv</a> //odkaz na funkci renderShowNazev2() v presenteru NazevPresenter.php
+*/
+
+class CardReadersPresenter extends BasePresenter
+{
+    /** @var Nette\Database\Context */
+    private $database;
+
+    public function __construct(Nette\Database\Context $database)
+    {
+        $this->database = $database;
+    }
+
+	// ---- vylistovani karet -----------
+	public function list_card_readers($searchText,$from=0,$count=5)
+	{
+        if ($this->template->searchText!="") {
+        	$cards = $this->database->table('cards')
+        			->where('name LIKE ? OR card_code LIKE ?', "%".$searchText."%","%".$searchText."%")
+        			->limit($count, $from);
+        	}
+        else {
+        	$cards = $this->database->table('cards')->limit($count, $from);
+        }
+		  return $cards;
+	}
+
+    public function renderShowList()
+    {
+			$card_readers = $this->database->table('card_readers');
+			$this->template->cards = $cards;
+    }
+	
+	//--- nova ctecka ----
+    protected function createComponentNewCardReader($cardReaderId)
+    {
+		 $addressis=['4564646','b5a6ffdd'];
+    	 $status = array(
+    				'0' => 'ven',
+    				'1' => 'dovnitř',
+					);
+        $form = new UI\Form;
+        $form->addText('comment', 'Komentář:');
+        $form->addSelect('address', 'Adresa:', $addressis);
+        $form->addRadioList('status', 'Stav:', $status);
+        $form->addSubmit('insert', 'vlozit');
+        $form->onSuccess[] = array($this, 'newCardReader');
+        return $form;
+    }
+
+    		// volá se po úspěšném odeslání formuláře
+    public function newCardReader(UI\Form $form, $values)
+    {
+        // ...
+        
+        $this->database->table('card_readers')->insert(array(
+        'comment' => $values->comment,
+        'address' => $values->address,
+        'direction' => $values->direction,
+    		));
+
+        $this->flashMessage('Byl úspěšně registrován nova karta:'.$values->name);
+        
+        //$this->redirect('Homepage:');
+        $this->redirect('Cards:showNewCardReader');
+    }
+    
+    public function renderShowNewCardReader($cardId)
+    {
+    	//jen definice pro router, aby nasel cestu a priradil si sablonu showNewCardReader.late v ni je pak vlozena komponenta newCardForm ktra vytvori a vozi formular definovany vyse  
+    }
+   
+
+	// ---- editace karty -----
+    protected function createComponentCardForm($cardId)
+    {
+
+    	 $status = array(
+    				'0' => 'zakazano',
+    				'1' => 'povoleno',
+					);
+        $form = new UI\Form;
+        $form->addHidden('id');
+        $form->addText('card_code', 'Kod karty:');
+        $form->addText('name', 'jmeno:');
+        $form->addRadioList('status', 'Stav:', $status);
+        $form->addSubmit('edit', 'upravit');
+        $form->onSuccess[] = array($this, 'editCard');
+        if (isset($this->template->card)) {
+        	  $form['id']->setValue($this->template->card->id);
+	        $form->setDefaults(array(
+			    	'card_code' => $this->template->card->card_code,
+	    			'name' => $this->template->card->name,
+	    			'status' =>$this->template->card->status,
+				));
+				}
+        return $form;
+    }
+    
+    // volá se po úspěšném odeslání formuláře
+    public function editCard(UI\Form $form, $values)
+    {
+        // ...
+        $this->flashMessage('Byl jste úspěšně registrován.:'.$values->name.$values->id);
+        
+        /*
+        $this->database->table('cards')->where('id', $values->id)->update(
+        	Array('card_code' => $values->card_code)
+        );
+        */
+        $this->database->table('cards')->where('id', $values->id)->update($values);
+        
+        //$this->redirect('Homepage:');
+        $this->redirect('Cards:showList');
+    }
+
+	// ---- mazani karty ------
+    public function renderShowConfirmationDeleteCard($cardId) // vytvoreni stranky z dotazem na potvrzeni smazani
+    {
+			//overeni existence karty
+        $card = $this->database->table('cards')->get($cardId);
+        if (!$card) {
+        		$this->error('Post not found');
+        }
+        $this->template->card = $card;			
+    }
+
+    protected function createComponentConfirmationDeletCardForm() //nove nepouzivam jan jako ukzaka - formular s jedinym tlacitkem pro potvrazeni smazani bude vlozen do stranky definovane vyse
+    {
+        $form = new UI\Form;
+        if (isset($this->template->card)){
+        	$form->addHidden('id', $this->template->card->id);
+        }
+        else $form->addHidden('id');
+        $form->addSubmit('delete', ("ano"));
+        $form->onSuccess[] = array($this, 'deleteCardFromConfirmation');
+    		return $form;
+    }    
+		
+    public function deleteCardFromConfirmation(UI\Form $form, $values) //nove nepouzivam jan jako ukzaka - vola se pro spracovani formulare definovaneho viz yse
+    {
+    	$this->renderDeleteCard($values->id);
+    }
+
+    public function renderDeleteCard($cardId)	//skutecne spracovani smazani zaznamu (nove potvrzeni o smazani resi pomoci jquery, takze pro smazani nepotrebuji zadnou mezistanku s potvrzeni, ale rovnou volam tutu fci primo ze sblony jako odkaz)
+    {
+			//overeni existence karty
+        $card = $this->database->table('cards')->get($cardId);
+        $card_code=$card->card_code;
+        $name=$card->name;
+        if (!$card) $this->error('Post not found');
+			$this->database->table('cards')->where('id', $cardId)->delete();
+			$this->flashMessage('Karta '.$card_code.' '.$name.' byla úspěšně smazana');
+			$this->redirect('Cards:showList');
+    }
+
+
+	// ---- zobrazen podrobnosti jedne karty ----
+    public function renderShowCard($cardId)
+    {
+        //$this->template->post = $this->database->table('posts')->get($postId);
+        $card = $this->database->table('cards')->get($cardId);
+        if (!$card) {
+        		$this->error('Post not found');
+        }
+        $this->template->card = $card;
+    }
+
+
+}
+
+
+

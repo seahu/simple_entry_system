@@ -1,0 +1,43 @@
+{block content}
+<p><a n:href="Homepage:default">← Zpět domu</a> <a n:href="Group:showList">← Zpět na seznam skupin.</a></p>
+<h1>Skupina: <b>{$groups->name}</b></h1>
+<table><tr>
+	<td>
+		<h1>Seznam členů:</h1>
+			<table>
+				<tr align="left">
+				<th> Kód karty </th>
+				<th> Název </th>
+				<th> Status </th>
+				<th> akce </th>
+				</tr>
+				
+				<tr n:foreach="$group_list as $entry" n:class="$iterator->isOdd() ? odd : even" >
+					<td>{$entry->card->card_code}</td>
+					<td>{$entry->card->name}</td>
+					<td>{$entry->card->status|replace:"1":"přítomen"|replace:"0":"nepřítomen"}</td>
+					<td> <a href="{link Group:delCardFromGroup $entry->card->id, $groups->id, $searchText}"> odebrat </a></td>
+				</tr>
+			</table>
+	</td>
+	<td>
+		{control cardSearchForm}
+		<hr>
+		<table>
+			<tr align="left">
+			<th> akce </th>
+			<th> kód karty </th>
+			<th> Jméno </th>
+			</tr>
+			<tr n:foreach="$cards as $card" n:class="$iterator->isOdd() ? odd : even" >
+				<td><a href="{link Group:addCardIntoGroup $card->id, $groups->id, $searchText}"> přidat </a></td>
+				<td>{$card->card_code}</td>
+				<td>{$card->name}</td>
+			</tr>
+		</table>
+	</td>
+</tr></table>
+
+
+
+

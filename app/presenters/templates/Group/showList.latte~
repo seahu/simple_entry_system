@@ -1,0 +1,33 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+<div id="dialog" title="Confirmation Required">
+  Opravdu opravdu toto chcete kartu a jeji zaznamy smazat?
+</div>
+
+<p><a n:href="Homepage:default">← Zpět domu</a></p>
+<p><a n:href="Group:showNewGroup"> Přidat novou skupinu</a></p>
+<h1>Seznam skupin</h1>
+<table>
+	<tr align="left">
+	<th> Název </th>
+	<th> Přítomní </th>
+	<th>  </th>
+	<th>  </th>
+	<th>  </th>
+	</tr>
+	
+	<tr n:foreach="$groups as $group" n:class="$iterator->isOdd() ? odd : even" >
+		<td>{$group->name}</td>
+		<td>  ({$arr[$group->id]["perc"]}%) {$arr[$group->id]["in"]} z {$arr[$group->id]["all"]} </td>
+		<td><a href="{link Group:showGroup $group->id}">seznam členů</a></td>
+		<td><a href="{link Group:showEditGroupName $group->id}">prejmenovat</a></td>
+		<td><a class="confirmLink" href="{link Group:deleteGroup $group->id}">smazat</a></td>
+	</tr>
+</table>
+{dump}

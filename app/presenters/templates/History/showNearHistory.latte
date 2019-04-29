@@ -1,0 +1,41 @@
+{block content}
+<h1>Nedavna historie: {$card->name}</h1>
+<p><a n:href="Homepage:default">← back to Home</a> <a n:href="History:showHistory">← Zpět na prohlížení historie</a></p>
+<table>
+	<tr>
+		<td width='100px'>datum/čas</td>
+		<td align="left" valign="top">
+			<div style="position: relative;height: 30px;">
+			{for $x=0; $x<1440; $x=$x+60}
+				<span n:class="$x%120==0 ? sudaHodina : lichaHodina" style="left: {$x}px;"></span>
+			{/for}
+			{for $x=0; $x<24; $x=$x+1}
+				<span style="position: absolute; left: {$x*60}px;">{$x}</span>
+			{/for}
+			</div>
+		</td>
+	</tr>
+{foreach $arr as $day => $times}
+	<tr>
+		<td> {$day} </td>
+			
+		<td>
+			<div style="position: relative;height: 30px;">
+				{for $x=0; $x<1440; $x=$x+60}
+					<span n:class="$x%120==0 ? sudaHodina : lichaHodina" style="left: {$x}px;"></span>
+				{/for}
+				
+				{foreach $times['graf'] as $graf}
+					<div class="pritomen" style="left: {(int)(1440*$graf['start']/1440)}px; width: {(int)(1440*($graf['end']-$graf[start])/1440)}px;">
+					</div>
+				{/foreach}
+	
+				{foreach $times['timestamps'] as $time}		
+					<div n:class="$time['direction']==1 ? prichod : odchod" style="left: {(int)((1440*$time['min']/1440)-2)}px;" title="{$time['time']}">
+					</div>
+				{/foreach}	
+			</div>
+		</td>
+	</tr>
+{/foreach}
+</table>

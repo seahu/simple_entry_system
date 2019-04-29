@@ -1,0 +1,33 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+
+<p><a n:href="Homepage:default">← back to Home</a></p>
+<h1>Historie</h1>
+{control filterForm}
+
+<table>
+	<tr align="left">
+	<th> Čas </th>
+	<th> kód karty </th>
+	<th> jméno </th>
+	<th> název čtečky </th>
+	<th> směr </th>
+	</tr>
+	
+	<tr n:foreach="$history as $row" n:class="$iterator->isOdd() ? odd : even" >
+		<td>{$row->timestamp}</td>
+		<td>{$row->card->card_code}</td>
+		<td>{$row->card->name} <span style="font-size: smaller;"><a n:href="History:ShowNearHistory $row->card->id"> nedávna historie </a></span></td>
+		<td>{$row->card_reader->comment}</td>
+		<td>{$row->card_reader->direction|replace:"1":"dovnitř"|replace:"0":"ven"}</td>
+	</tr>
+</table>
+<p><a n:href="History:ShowNearHistory">← csv</a></p>
+<p><a n:href="History:ShowHistoryCsvList">← csv</a></p>
+{dump}

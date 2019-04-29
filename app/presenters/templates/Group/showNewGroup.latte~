@@ -1,0 +1,4 @@
+{block content}
+{control newGroupForm}
+
+<p><a n:href="Group:showList">← Zpět na seznam skupin</a></p>

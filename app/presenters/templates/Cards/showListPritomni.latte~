@@ -1,0 +1,23 @@
+{block content}
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$basePath}/css/jquery-ui.css">
+	<script src="{$basePath}/js/jquery-ui.js"></script>
+	<script src="{$basePath}/js/confirmLink.js"></script>
+{/block}
+
+<div id="dialog" title="Confirmation Required">
+  Opravdu opravdu toto chcete kartu a jeji zaznamy smazat?
+</div>
+<h1>Seznam přítomných</h1>
+<p><a n:href="Homepage:default">← back to Home</a></p>
+<table>
+	<tr align="left">
+	<th> kód karty </th>
+	<th> Jméno </th>
+	</tr>
+	<tr n:foreach="$cards as $card" n:class="$iterator->isOdd() ? odd : even" >
+		<td>{$card->card_code}</td>
+		<td>{$card->name}</td>
+	</tr>
+</table>
