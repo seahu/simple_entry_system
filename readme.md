@@ -2,8 +2,8 @@ SIMPLE ENTRY SYSTEM WITCH CONNECTIN INTO SCHOOL SYSTEM EDOOKIT
 ==============================================================
 next in Czech language
 
-Jenoduchy vstupní syst� �ms napojením na školni infrma�ní systém EDO
-=========================================================================
+Jenoduchý vstupní systém s napojením na školní infrmační systém EDOKIT
+=======================================================================
 programovaci jazyk:
     webova aplikace - PHP (pouzity framework Nette)
     ukladani dat    - MySQL
@@ -22,17 +22,6 @@ Zabespeceni:
 ------------
 je reseno pomoci firewallu a nastaveni weboveho serveru - neni soucasti projektu
 
-
-
-Nette Sandbox
-=============
-
-Sandbox is a pre-packaged and pre-configured Nette Framework application
-that you can use as the skeleton for your new applications.
-
-[Nette](https://nette.org) is a popular tool for PHP web development.
-It is designed to be the most usable and friendliest as possible. It focuses
-on security and performance and is definitely one of the safest PHP frameworks.
 
 License
 -------
