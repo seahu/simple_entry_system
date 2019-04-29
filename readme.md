@@ -2,7 +2,7 @@ SIMPLE ENTRY SYSTEM WITCH CONNECTIN INTO SCHOOL SYSTEM EDOOKIT
 ==============================================================
 next in Czech language
 
-Jenoduchý vstupní systém s napojením na školní infrmační systém EDOKIT
+Jenoduchý vstupní systém s napojením na školní infrmační systém EDOOKIT
 =======================================================================
 programovaci jazyk:
     webova aplikace - PHP (pouzity framework Nette)
